@@ -3,7 +3,7 @@ const handleDomo = (e) => {
 
     $("#domoMessage").animate({ width: 'hide' }, 350);
 
-    if ($("#domoName").val() == '' || $("#domoAge").val() == '') {
+    if ($("#domoName").val() == '' || $("#domoAge").val() == '' || $("#domoPet").val() == '') {
         handleError("RAWR! All fields are required");
         return false;
     }
@@ -24,10 +24,12 @@ const DomoForm = (props) => {
             method="POST"
             className="domoForm"
         >
-            <label htmlFor="Name">Name: </label>
+            <label htmlFor="Name">&emsp;Name:&nbsp;</label>
             <input id="domoName" type="text" name="name" placeholder="Domo Name" />
-            <label htmlFor="age">Age: </label>
+            <label htmlFor="age">&emsp;Age:&nbsp;</label>
             <input id="domoAge" type="text" name="age" placeholder="Domo Age" />
+            <label htmlFor="pet">&emsp;Pet type:&nbsp;</label>
+            <input id="domoPet" type="text" name="pet" placeholder="Domo Pet" />
             <input type="hidden" name="_csrf" value={props.csrf} />
             <input className="makeDomoSubmit" type="submit" value="Make Domo" />
         </form>
@@ -49,6 +51,10 @@ const DomoList = function(props){
                 <img src="/assets/img/domoface.jpeg" alt="domo face" className="domoFace" />
                 <h3 className="domoName">Name: {domo.name}</h3>
                 <h3 className="domoAge">Age: {domo.age}</h3>
+                <div className="petDiv">
+                    <h3 className="domoPet">Pet type: {domo.pet}</h3>
+                    <button className="openPet" onClick={() => openPetWindow(domo.pet)}>Learn more about this animal</button>
+                </div>
             </div>
         );
     });
@@ -59,6 +65,10 @@ const DomoList = function(props){
         </div>
     );
 };
+
+const openPetWindow = (_pet) => {
+    window.open("https://en.wikipedia.org/wiki/" + _pet);
+}
 
 const loadDomosFromServer = () => {
     sendAjax('GET', '/getDomos', null, (data) => {

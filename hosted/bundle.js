@@ -6,7 +6,7 @@ var handleDomo = function handleDomo(e) {
     width: 'hide'
   }, 350);
 
-  if ($("#domoName").val() == '' || $("#domoAge").val() == '') {
+  if ($("#domoName").val() == '' || $("#domoAge").val() == '' || $("#domoPet").val() == '') {
     handleError("RAWR! All fields are required");
     return false;
   }
@@ -27,18 +27,25 @@ var DomoForm = function DomoForm(props) {
     className: "domoForm"
   }, /*#__PURE__*/React.createElement("label", {
     htmlFor: "Name"
-  }, "Name: "), /*#__PURE__*/React.createElement("input", {
+  }, "\u2003Name:\xA0"), /*#__PURE__*/React.createElement("input", {
     id: "domoName",
     type: "text",
     name: "name",
     placeholder: "Domo Name"
   }), /*#__PURE__*/React.createElement("label", {
     htmlFor: "age"
-  }, "Age: "), /*#__PURE__*/React.createElement("input", {
+  }, "\u2003Age:\xA0"), /*#__PURE__*/React.createElement("input", {
     id: "domoAge",
     type: "text",
     name: "age",
     placeholder: "Domo Age"
+  }), /*#__PURE__*/React.createElement("label", {
+    htmlFor: "pet"
+  }, "\u2003Pet type:\xA0"), /*#__PURE__*/React.createElement("input", {
+    id: "domoPet",
+    type: "text",
+    name: "pet",
+    placeholder: "Domo Pet"
   }), /*#__PURE__*/React.createElement("input", {
     type: "hidden",
     name: "_csrf",
@@ -71,11 +78,24 @@ var DomoList = function DomoList(props) {
       className: "domoName"
     }, "Name: ", domo.name), /*#__PURE__*/React.createElement("h3", {
       className: "domoAge"
-    }, "Age: ", domo.age));
+    }, "Age: ", domo.age), /*#__PURE__*/React.createElement("div", {
+      className: "petDiv"
+    }, /*#__PURE__*/React.createElement("h3", {
+      className: "domoPet"
+    }, "Pet type: ", domo.pet), /*#__PURE__*/React.createElement("button", {
+      className: "openPet",
+      onClick: function onClick() {
+        return openPetWindow(domo.pet);
+      }
+    }, "Learn more about this animal")));
   });
   return /*#__PURE__*/React.createElement("div", {
     className: "domoList"
   }, domoNodes);
+};
+
+var openPetWindow = function openPetWindow(_pet) {
+  window.open("https://en.wikipedia.org/wiki/" + _pet);
 };
 
 var loadDomosFromServer = function loadDomosFromServer() {
